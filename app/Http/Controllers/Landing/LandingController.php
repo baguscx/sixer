@@ -62,4 +62,16 @@ class LandingController extends Controller
     {
         //
     }
+
+    public function explore(){
+        //
+    }
+
+    public function detail(string $id){
+        //
+    }
+
+    public function detail_booking(string $id){
+        //
+    }
 }
