@@ -38,7 +38,7 @@ class CreateNewUser implements CreatesNewUsers
                 $this->createTeam($user);
 
                 $detail_user = new DetailUser;
-                $detail_user->users_id = $user->id;
+                $detail_user->usersx_id = $user->id;
                 $detail_user->photo = NULL;
                 $detail_user->role = NULL;
                 $detail_user->contact_number = NULL;

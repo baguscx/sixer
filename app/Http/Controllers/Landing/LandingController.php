@@ -12,7 +12,7 @@ class LandingController extends Controller
      */
     public function index()
     {
-        //
+        return view('sixer.pages.landing.index');
     }
 
     /**
@@ -65,11 +65,11 @@ class LandingController extends Controller
 
     //custom function
     public function explore(){
-        //
+        return view('sixer.pages.landing.explore');
     }
 
     public function detail(string $id){
-        //
+        return view('sixer.pages.landing.detail');
     }
 
     public function booking(string $id){
