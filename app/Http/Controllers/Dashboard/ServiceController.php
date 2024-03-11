@@ -12,7 +12,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //
+        return view('sixer.pages.dashboard.service.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        //
+        return view('sixer.pages.dashboard.service.create');
     }
 
     /**
@@ -44,7 +44,7 @@ class ServiceController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('sixer.pages.dashboard.service.edit');
     }
 
     /**
