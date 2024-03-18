@@ -1,7 +1,7 @@
 @extends('sixer.layouts.app')
 @section('title', 'My Request')
 @section('content')
-@if ()
+{{-- @if () --}}
     <main class="h-full overflow-y-auto">
         <div class="container mx-auto">
             <div class="grid w-full gap-5 px-10 mx-auto md:grid-cols-12">
@@ -156,7 +156,7 @@
             </div>
         </section>
     </main>
-@else
+{{-- @else --}}
     {{-- <div class="flex h-screen">
         <div class="m-auto text-center">
             <img src="{{asset('/assets/images/empty-illustration.svg')}}" alt="" class="w-48 mx-auto">
