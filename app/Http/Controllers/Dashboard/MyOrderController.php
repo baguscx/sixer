@@ -3,16 +3,30 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\MyOrder\UpdateMyOrderRequest;
+use App\Models\AdvantageService;
+use App\Models\AdvantageUser;
+use App\Models\Order;
+use App\Models\Service;
+use App\Models\Tagline;
+use App\Models\ThumbnailService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MyOrderController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('sixer.pages.dashboard.order.index');
+        $orders = Order::where('freelancer_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        return view('sixer.pages.dashboard.order.index', compact('orders'));
     }
 
     /**
@@ -20,7 +34,7 @@ class MyOrderController extends Controller
      */
     public function create()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -28,31 +42,49 @@ class MyOrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return abort(404);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Order $order)
     {
-        return view('sixer.pages.dashboard.order.detail');
+        $service = Service::where('id', $order->service_id)->first();
+        $thumbnail = ThumbnailService::where('service_id', $order->service_id)->get();
+        $advantage_service = AdvantageService::where('service_id', $order->service_id)->get();
+        $advantage_user = AdvantageUser::where('service_id', $order->service_id)->get();
+        $tagline = Tagline::where('service_id', $order->service_id)->get();
+        return view('sixer.pages.dashboard.order.detail', compact('order', 'thumbnail', 'advantage_service', 'advantage_user', 'tagline'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Order $order)
     {
-        //
+        return view('sixer.page.dashboard.order.detail', compact('order'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateMyOrderRequest $request, Order $order)
     {
-        //
+        $data = $request->all();
+        if(isset($data['file'])){
+            $data['file'] = $request->file('file')->store(
+                'assets/order/attachment', 'public'
+            );
+        }
+
+        $order = Order::find($order->id);
+        $order->file = $data['file'];
+        $order->note = $data['note'];
+        $order->save();
+
+        toast()->success('Submit Order has been success');
+        return redirect()->route('member.order.index');
     }
 
     /**
@@ -60,15 +92,25 @@ class MyOrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return abort(404);
     }
 
     public function accepted(string $id){
+        $order = Order::find($id);
+        $order->order_status_id = 2;
+        $order->save();
 
+        toast()->success('Accept Order has been success');
+        return back();
     }
 
     //custom function
     public function rejected(string $id){
+        $order = Order::find($id);
+        $order->order_status_id = 3;
+        $order->save();
 
+        toast()->success('Reject Order has been success');
+        return back();
     }
 }
