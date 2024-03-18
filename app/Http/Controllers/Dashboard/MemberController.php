@@ -3,16 +3,35 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MemberController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('sixer.pages.dashboard.index');
+        $orders = Order::where('freelancer_id', Auth::user()->id)->get();
+        $progress = Order::where('freelancer_id', Auth::user()->id)
+                        ->where('order_status_id', 2)
+                        ->count();
+        $completed = Order::where('freelancer_id', Auth::user()->id)
+                        ->where('order_status_id', 1)
+                        ->count();
+        $freelancer = Order::where('buyer_id', Auth::user()->id)
+                        ->where('order_status_id', 2)
+                        ->disctrict('freelancer_id')
+                        ->count();
+        return view('sixer.pages.dashboard.index', compact('orders', 'progress', 'completed', 'freelancer'));
     }
 
     /**
@@ -20,7 +39,7 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -28,7 +47,7 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -36,7 +55,7 @@ class MemberController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -44,7 +63,7 @@ class MemberController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -52,7 +71,7 @@ class MemberController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -60,6 +79,6 @@ class MemberController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return abort(404);
     }
 }
