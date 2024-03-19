@@ -29,7 +29,8 @@ class MemberController extends Controller
                         ->count();
         $freelancer = Order::where('buyer_id', Auth::user()->id)
                         ->where('order_status_id', 2)
-                        ->disctrict('freelancer_id')
+                        // ->disctrict('freelancer_id')
+                        ->where('freelancer_id', '<>', null) // Assuming freelancer_id cannot be null
                         ->count();
         return view('sixer.pages.dashboard.index', compact('orders', 'progress', 'completed', 'freelancer'));
     }
