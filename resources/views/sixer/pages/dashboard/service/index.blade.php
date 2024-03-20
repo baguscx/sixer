@@ -1,7 +1,7 @@
 @extends('sixer.layouts.app')
 @section('title', 'My Service')
 @section('content')
-{{-- @if () --}}
+@if (count($services))
     <main class="h-full overflow-y-auto">
         <div class="container mx-auto">
             <div class="grid w-full gap-5 px-10 mx-auto md:grid-cols-12">
@@ -10,7 +10,7 @@
                         My Services
                     </h2>
                     <p class="text-sm text-gray-400">
-                        3 Total Services
+                        {{ count($services) }} total services
                     </p>
                 </div>
                 <div class="col-span-4 lg:text-right">
@@ -22,6 +22,7 @@
                 </div>
             </div>
         </div>
+
         <section class="container px-6 mx-auto mt-5">
             <div class="grid gap-5 md:grid-cols-12">
                 <main class="col-span-12 p-4 md:pt-0">
@@ -37,95 +38,45 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white">
-                                <tr class="text-gray-700 border-b">
-                                    <td class="w-2/6 px-1 py-5">
-                                        <div class="flex items-center text-sm">
-                                            <div class="relative w-10 h-10 mr-3 rounded-full md:block">
-                                                <img class="object-cover w-full h-full rounded" src="{{url('https://randomuser.me/api/portraits/men/3.jpg')}}" alt="" loading="lazy" />
-                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                @forelse ($services as $key => $service)
+                                    <tr class="text-gray-700 border-b">
+                                        <td class="w-2/6 px-1 py-5">
+                                            <div class="flex items-center text-sm">
+                                                <div class="relative w-10 h-10 mr-3 rounded-full md:block">
+                                                    @if (isset($service->thumbnail_service[0]->thumbnail) != NULL)
+                                                        <img class="object-cover w-full h-full rounded" src="{{ url(Storage::url($service->thumbnail_service[0]->thumbnail)) }}" alt="" loading="lazy" />
+                                                    @else
+                                                        <svg class="object-cover w-full h-full rounded text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M12 14l-4-5h8l-4 5z" />
+                                                        </svg>
+                                                    @endif
+                                                    <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                                </div>
+                                                <div>
+                                                    <a href="#" class="font-medium text-black">
+                                                        {{ $service->title ?? ''}}
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <a href="#" class="font-medium text-black">
-                                                    Design WordPress <br>E-Commerce Modules
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-1 py-5 text-sm">
-                                        Website Developer
-                                    </td>
-                                    <td class="px-1 py-5 text-sm">
-                                        Rp120.000
-                                    </td>
-                                    <td class="px-1 py-5 text-sm text-green-500 text-md">
-                                        Active
-                                    </td>
-                                    <td class="px-1 py-5 text-sm">
-                                        <a href="{{route('member.service.edit', 1)}}" class="px-4 py-2 mt-2 text-left text-white rounded-xl bg-serv-email">
-                                            Edit Service
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="text-gray-700 border-b">
-                                    <td class="w-2/6 px-1 py-5">
-                                        <div class="flex items-center text-sm">
-                                            <div class="relative w-10 h-10 mr-3 rounded-full md:block">
-                                                <img class="object-cover w-full h-full rounded" src="{{url('https://randomuser.me/api/portraits/men/7.jpg')}}" alt="" loading="lazy" />
-                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                            </div>
-                                            <div>
-                                                <a href="#"  class="font-medium text-black">
-                                                Fix Any Issue on Your <br>
-                                                WordPress Website
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-1 py-5 text-sm">
-                                        Website Developer
-                                    </td>
-                                    <td class="px-1 py-5 text-sm">
-                                        Rp120.000
-                                    </td>
-                                    <td class="px-1 py-5 text-sm text-green-500 text-md">
-                                        Active
-                                    </td>
-                                    <td class="px-1 py-5 text-sm">
-                                        <a href="{{route('member.service.edit', 1)}}" class="px-4 py-2 mt-2 text-left text-white rounded-xl bg-serv-email">
-                                            Edit Service
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="text-gray-700">
-                                    <td class="w-2/6 px-1 py-5">
-                                        <div class="flex items-center text-sm">
-                                            <div class="relative w-10 h-10 mr-3 rounded-full md:block">
-                                                <img class="object-cover w-full h-full rounded" src="{{url('https://randomuser.me/api/portraits/men/5.jpg')}}" alt="" loading="lazy" />
-                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                            </div>
-                                            <div>
-                                                <a href="#" class="font-medium text-black">
-                                                Create a UI Design <br>
-                                                for Your Application
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-1 py-5 text-sm">
-                                        Website Developer
-                                    </td>
-                                    <td class="px-1 py-5 text-sm">
-                                        Rp120.000
-                                    </td>
-                                    <td class="px-1 py-5 text-sm text-green-500 text-md">
-                                        Active
-                                    </td>
-                                    <td class="px-1 py-5 text-sm">
-                                        <a href="{{route('member.service.edit', 1)}}" class="px-4 py-2 mt-2 text-left text-white rounded-xl bg-serv-email">
-                                            Edit Service
-                                        </a>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td class="px-1 py-5 text-sm">
+                                            {{$service->user->detail_user->role ?? ''}}
+                                        </td>
+                                        <td class="px-1 py-5 text-sm">
+                                            {{ 'Rp.'.number_format($service->price) ?? ''}}
+                                        </td>
+                                        <td class="px-1 py-5 text-sm text-green-500 text-md">
+                                            {{$service->order_status_id->order_status->name ?? ''}}
+                                        </td>
+                                        <td class="px-1 py-5 text-sm">
+                                            <a href="{{route('member.service.edit', $service['id'])}}" class="px-4 py-2 mt-2 text-left text-white rounded-xl bg-serv-email">
+                                                Edit Service
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    {{-- empty --}}
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -133,7 +84,7 @@
             </div>
         </section>
     </main>
-{{-- @else
+@else
     <div class="flex h-screen">
         <div class="m-auto text-center">
             <img src="{{asset('/assets/images/empty-illustration.svg')}}" alt="" class="w-48 mx-auto">
@@ -146,12 +97,12 @@
             </p>
 
             <div class="relative mt-0 md:mt-6">
-                <button class="px-4 py-2 mt-2 text-left text-white rounded-xl bg-serv-button">
+                <a href="{{ route('member.service.create') }}" class="px-4 py-2 mt-2 text-left text-white rounded-xl bg-serv-button">
                     + Add Services
-                </button>
+                </a>
             </div>
         </div>
     </div>
-@endif --}}
+@endif
 
 @endsection

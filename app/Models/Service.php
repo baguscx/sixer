@@ -45,7 +45,7 @@ class Service extends Model
         return $this->hasMany('App\Models\AdvantageService', 'service_id');
     }
     public function thumbnail_service(){
-        return $this->hasMany('App\Models\TumbnailService', 'service_id');
+        return $this->hasMany('App\Models\ThumbnailService', 'service_id');
     }
     public function tagline(){
         return $this->hasMany('App\Models\Tagline', 'service_id');
