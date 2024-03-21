@@ -151,7 +151,7 @@
                     @endif
                         <div class="w-full">
                             <div class="flex items-center justify-between">
-                                <h2 class="my-1 text-xl font-medium text-serv-bg">{{$service0->user->name ?? ''}}</h2>
+                                <h2 class="my-1 text-xl font-medium text-serv-bg">{{$service->user->name ?? ''}}</h2>
                             </div>
                             <p class="text-md text-serv-text">
                                 {{$service->user->detail_user->role ?? ''}}
@@ -174,7 +174,7 @@
                                 <path d="M7 21.5L4.14142 18.6414C4.06332 18.5633 4.06332 18.4367 4.14142 18.3586L7 15.5" stroke="#082431" stroke-width="1.5" stroke-linecap="round" />
                                 <path d="M16 3L18.8586 5.85858C18.9367 5.93668 18.9367 6.06332 18.8586 6.14142L16 9" stroke="#082431" stroke-width="1.5" stroke-linecap="round" />
                             </svg>
-                            {{ $service->revison_limit ?? '' }} Revision Limit
+                            {{ $service->revision_limit ?? '' }} Revision Limit
                         </div>
                     </div>
                     <div class="px-4 pt-4 pb-2 features-list">
