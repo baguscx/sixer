@@ -63,7 +63,11 @@
                     </div>
                     <div class="flex overflow-x-scroll pb-10 hide-scroll-bar dragscroll -mx-3">
                         <div class="flex flex-nowrap">
-                            @include('sixer.components.landing.service')
+                            @forelse ($services as $item)
+                                @include('sixer.components.landing.service')
+                            @empty
+                                {{-- empty --}}
+                            @endforelse
                         </div>
 
                     </div>
