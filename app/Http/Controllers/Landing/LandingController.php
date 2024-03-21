@@ -74,7 +74,7 @@ class LandingController extends Controller
     //custom function
     public function explore(){
         $services = Service::orderBy('created_at', 'desc')->get();
-        return view('sixer.pages.landing.explore', compact('servives'));
+        return view('sixer.pages.landing.explore', compact('services'));
     }
 
     public function detail(string $id){
