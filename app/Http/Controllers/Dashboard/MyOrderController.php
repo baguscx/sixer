@@ -63,7 +63,8 @@ class MyOrderController extends Controller
      */
     public function edit(Order $order)
     {
-        return view('sixer.page.dashboard.order.detail', compact('order'));
+
+        return view('sixer.pages.dashboard.order.edit', compact('order'));
     }
 
     /**
