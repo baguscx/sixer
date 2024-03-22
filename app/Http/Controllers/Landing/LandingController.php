@@ -115,6 +115,6 @@ class LandingController extends Controller
 
     public function detail_booking(string $id){
         $order = Order::where('id', $id)->first();
-        return view('pages.landing.booking', compact($order));
+        return view('sixer.pages.landing.booking', compact('order'));
     }
 }

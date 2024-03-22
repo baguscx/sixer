@@ -10,7 +10,7 @@
 <body class="antialiased">
     <div class="relative">
         @include('sixer.includes.landing.header')
-        {{-- @include('sweetalert::alert') --}}
+        @include('sweetalert::alert')
         @yield('content')
         @include('sixer.includes.landing.footer')
     </div>
