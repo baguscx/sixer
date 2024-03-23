@@ -85,42 +85,56 @@
                                 </tr>
                             </tbody>
                         </table>
+
+                        <form action="{{ route('member.order.update', $order->id) }}" enctype="multipart/form-data" method="POST">
+                            @method('PUT')
+                            @csrf
                         <div class="flex p-8 border border-gray-200 rounded-lg bg-serv-upload-bg h-128">
                             <div class="m-auto text-center">
-                                <img src="/images/services-file-icon.svg" alt="" class="w-20 mx-auto">
+                                <img src="{{asset('/assets/images/services-file-icon.svg')}}" alt="" class="w-20 mx-auto">
                                 <h2 class="mt-8 mb-1 text-2xl font-semibold text-gray-700">
-                                    ProjectWordpress.zip
+                                    @if (isset($order->file))
+                                        {{substr($order->file, -10) ?? ''}}
+                                    @else
+                                        <p>please upload before submit</p>
+                                    @endif
                                 </h2>
                                 <p class="text-sm text-gray-400">
                                     Drag and drop an file, or Browse
                                 </p>
 
                                 <div class="relative mt-0 md:mt-6">
-                                    <button class="px-4 py-2 mt-2 text-left text-gray-700 rounded-xl bg-serv-hr">
-                                        Choose File
-                                    </button>
+                                        @if (isset($order->file))
+                                            <a href="{{url(Storage::url($order->file ?? ''))}}" class="px-4 py-2 mt-2 text-left text-gray-700 rounded-xl bg-serv-hr" onclick="return confirm('Are you sure want to download this file?')">Download file</a>
+                                        @else
+                                            <input type="file" name="file" id="choose" accept=".zip" hidden required>
+                                            <label for="choose" class="px-4 py-2 mt-2 text-left text-gray-700 rounded-xl bg-serv-hr">Choose file</label>
+                                        @endif
                                 </div>
                             </div>
                         </div>
-                        <form action="{{ route('member.order.update', $order->id) }}" enctype="multipart/form-data" method="POST">
-                            @method('PUT')
-                            @csrf
                             <div class="">
                                 <div class="p-1 mt-5">
                                     <div class="grid grid-cols-6 gap-6">
                                         <div class="col-span-6">
-                                            <label for="service-name" class="block mb-3 font-medium text-gray-700 text-md">Note</label>
-                                            <textarea placeholder="Enter your biography here.." type="text" name="service-name" id="service-name" autocomplete="service-name" class="block w-full py-3 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" rows="4">“Hai, aku baru saja mengirim zip file service yang kamu butuhkan. di dalamnya terdapat soft file dan panduan cara menggunakan service ini. terima kasih sudah order. jika butuh sesuatu bisa contact saya di whatsapp”</textarea>
+                                            <label for="note" class="block mb-3 font-medium text-gray-700 text-md">Note</label>
+                                            <textarea placeholder="Enter your biography here.." type="text" name="note" id="note" autocomplete="note" class="block w-full py-3 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm" rows="4" required {{isset($order->file) ? 'disabled' : ''}}>{{$order->service->note}}</textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="px-1 py-4 text-right">
-                                    <button type="submit" class="inline-flex justify-center px-4 py-2 mr-4 text-sm font-medium text-gray-700 bg-white border border-gray-600 rounded-lg shadow-sm hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300">
+                                    <a href="{{route('member.order.index')}}" type="button" class="inline-flex justify-center px-4 py-2 mr-4 text-sm font-medium text-gray-700 bg-white border border-gray-600 rounded-lg shadow-sm hover:bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300" onclick="return confirm('are you sure want go aback?')">
                                         Back
-                                    </button>
-                                    <button type="submit" class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                        Approve
-                                    </button>
+                                    </a>
+                                    @if (isset($order->file) == FALSE)
+                                        <button type="submit" class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" onclick="return confirm('are you sure want submit this data?')">
+                                            Approve
+                                        </button>
+                                    @else
+                                        <button type="submit" class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" disabled>
+                                            Approve
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
                         </form>
